@@ -1,5 +1,4 @@
 import React from 'react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { ItemBox } from '@/components/ui/items';
 import { AddItem } from '@/components/ui/add-item';
 import AppLayout from '@/layouts/app-layout';
@@ -7,7 +6,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import AddItemMod from '@/pages/Create';
-import { router } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -54,7 +53,9 @@ export default function Dashboard() {
                         key={item.id}
                         className="relative aspect-[4/6] cursor-pointer rounded-xl border hover:scale-102 ease-in-out transition duration-300"
                       >
-                        <ItemBox className="" item={item} />
+                        <Link href={`/items/${item.id}`}>
+                          <ItemBox className="" item={item} />
+                        </Link>
                     </div>
                     ))}
                 </div>

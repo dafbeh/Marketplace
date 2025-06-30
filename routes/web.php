@@ -16,10 +16,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/items/create', function () {
         return Inertia::render('Create');
     })->name('items.create');
-});
 
-Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+
+    Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
 });
 
 require __DIR__.'/settings.php';

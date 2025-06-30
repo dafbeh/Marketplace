@@ -22,11 +22,21 @@ class ItemController extends Controller
             'quantity' => 'nullable|integer|min:0',
             'category' => 'nullable|string|max:255',
             'image_url' => 'nullable|string|max:255',
-            'sku' => 'nullable|string|max:255|unique:items,sku',
         ]);
 
         DB::table('items')->insert($validated);
 
         return redirect()->route('dashboard')->with('success', 'Item created successfully');
+    }
+
+    public function show($id)
+    {
+        $item = DB::table('items')->find($id);
+
+        if (!$item) {
+            return redirect()->route('dashboard')->with('error', 'Item not found');
+        }
+
+        return Inertia::render('Item', ['item' => $item]);
     }
 }
