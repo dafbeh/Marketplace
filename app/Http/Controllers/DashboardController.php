@@ -13,7 +13,8 @@ class DashboardController extends Controller
         $items = DB::table('items')->get();
 
         return Inertia::render('dashboard', [
-            'items' => $items
+            'items' => $items,
+            'user' => auth()->user(),
         ]);
     }
 }

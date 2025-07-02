@@ -24,6 +24,8 @@ class ItemController extends Controller
             'image_url' => 'nullable|string|max:255',
         ]);
 
+        $validated['user_id'] = auth()->id();
+
         DB::table('items')->insert($validated);
 
         return redirect()->route('dashboard')->with('success', 'Item created successfully');

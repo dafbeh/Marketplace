@@ -27,7 +27,7 @@ export function ItemBox({ className, item }: ItemBox) {
             <span className="font-bold text-sm dark:text-white/80">{item?.description}</span>
         </div>
         <div className="absolute bottom-2 right-2 gap-[1px] dark:bg-white/20 bg-black/80 border-1 rounded-full">
-          <span className="font-bold text-xl dark:text-green-300 text-white px-4">${item?.price}</span>
+          <span className="font-bold text-xl dark:text-green-300 text-white px-4">${item?.price.toLocaleString()}</span>
         </div>
       </div>
     </div>
