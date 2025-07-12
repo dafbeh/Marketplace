@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Middleware\AdminOnly;
+use App\Http\Controllers\OrderController;
 
 
 Route::get('/', function () {
@@ -15,6 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
+
+    Route::post('/items/buy/{item}', [OrderController::class, 'create'])->name('orders.create');
 });
 
 Route::middleware(['auth', 'verified', AdminOnly::class])->group(function () {

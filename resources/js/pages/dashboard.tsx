@@ -35,7 +35,8 @@ export default function Dashboard() {
             <Head title="Dashboard" />
             <AddItemMod isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 3xl:grid-cols-20">
+                <div className="grid auto-rows-min gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 
+                    2xl:grid-cols-7 3xl:grid-cols-20">
                     {!!user?.is_admin && (
                       <div
                       className="relative aspect-[4/6] rounded-xl border hover:scale-102 ease-in-out transition duration-300 cursor-pointer"
