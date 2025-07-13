@@ -18,6 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
 
     Route::post('/items/buy/{item}', [OrderController::class, 'create'])->name('orders.create');
+
+    Route::get('/orders', [OrderController::class, 'show'])->name('orders.show');
 });
 
 Route::middleware(['auth', 'verified', AdminOnly::class])->group(function () {

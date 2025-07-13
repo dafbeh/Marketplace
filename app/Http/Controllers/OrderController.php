@@ -25,4 +25,22 @@ class OrderController extends Controller
 
         return Inertia::location('/dashboard')->with('success', 'Order created successfully!');
     }
+
+    public function show() {
+        $userId = auth()->id();
+        
+        $orders = DB::table('orders')
+            ->join('items', 'orders.item_id', '=', 'items.id')
+            ->where('orders.user_id', $userId)
+            ->select(
+                'orders.id',
+                'items.name as item_name',
+                'items.price as item_price',
+            )
+            ->orderBy('orders.id', 'desc')
+            ->get();
+
+
+        return Inertia::render('Orders', ['orders' => $orders]);
+    }
 }
