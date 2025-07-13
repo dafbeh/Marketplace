@@ -23,7 +23,9 @@ class OrderController extends Controller
             'total_price' => $validated['total_price'],
         ]);
 
-        return Inertia::location('/dashboard')->with('success', 'Order created successfully!');
+        return Inertia::render('Success', [
+            'message' => 'Order placed successfully.',
+        ]);
     }
 
     public function show() {
