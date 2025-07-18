@@ -20,6 +20,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/items/buy/{item}', [OrderController::class, 'create'])->name('orders.create');
 
     Route::get('/orders', [OrderController::class, 'show'])->name('orders.show');
+
+    Route::delete('/orders/delete/{order}', [OrderController::class, 'delete'])->name('orders.delete');
 });
 
 Route::middleware(['auth', 'verified', AdminOnly::class])->group(function () {
@@ -28,8 +30,9 @@ Route::middleware(['auth', 'verified', AdminOnly::class])->group(function () {
     })->name('items.create');
 
     Route::post('/items', [ItemController::class, 'store'])->name('items.store');
-});
 
+    Route::delete('/items/delete/{item}', [ItemController::class, 'delete'])->name('items.delete');
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -1,10 +1,7 @@
-import { Head } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { ArrowLeft } from 'lucide-react';
-import { Link } from '@inertiajs/react';
-import { router } from '@inertiajs/react';
-import axios from 'axios';
+import { ArrowLeft, Trash2 } from 'lucide-react';
+import { Link, router, Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -28,14 +25,23 @@ type ItemProps = {
 };
 
 export default function Item({ item }: ItemProps) {
+    function handleDelete(orderId: number) {
+        if (confirm('Are you sure you want to delete this order?')) {
+            router.delete(`/items/delete/${orderId}`);
+        }
+    }
     return (
         <div>
             <AppLayout breadcrumbs={breadcrumbs}>
                 <Head title={item.name} />
-                <div className='p-3 w-18'>
-                  <Link href="/dashboard">
-                    <ArrowLeft size={44} className="bg-gray-900 hover:bg-gray-700 p-2 rounded-full" />
-                  </Link>
+                <div className="flex justify-between">
+                  <div className='p-3 w-18'>
+                    <Link href="/dashboard">
+                      <ArrowLeft size={44} className="bg-gray-900 hover:bg-gray-700 p-2 rounded-full" />
+                    </Link>
+                  </div>
+                  <button className="text-red-600 hover:text-red-800 cursor-pointer p-3"
+                    onClick={() => handleDelete(item.id)}>{ <Trash2/> }</button>
                 </div>
                 <div className="flex items-center flex-col w-full h-full">
                     <h1 className="font-bold text-3xl pb-2">{item.name}</h1>

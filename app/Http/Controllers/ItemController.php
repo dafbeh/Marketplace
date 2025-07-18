@@ -31,6 +31,18 @@ class ItemController extends Controller
         return redirect()->route('dashboard')->with('success', 'Item created successfully');
     }
 
+    public function delete($item)
+    {
+        $userId = auth()->id();
+
+        DB::table('items')
+            ->where('id', $item)
+            ->where('user_id', $userId)
+            ->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Item deleted successfully');
+    }
+
     public function show($id)
     {
         $item = DB::table('items')->find($id);

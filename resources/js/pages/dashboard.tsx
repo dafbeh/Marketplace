@@ -48,7 +48,8 @@ export default function Dashboard() {
                     {items.map(item => (
                       <div
                         key={item.id}
-                        className="relative aspect-[4/6] cursor-pointer rounded-xl border hover:scale-102 ease-in-out transition duration-300"
+                        className="relative aspect-[4/6] cursor-pointer rounded-lg
+                         hover:scale-102 ease-in-out transition duration-300 border-1 border-gray-900"
                       >
                         <Link href={`/items/${item.id}`}>
                           <ItemBox className="" item={item} />

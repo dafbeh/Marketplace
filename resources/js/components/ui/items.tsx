@@ -14,10 +14,10 @@ interface ItemBox {
 export function ItemBox({ className, item }: ItemBox) {
   return (
     <div className={className}>
-      <div className="flex flex-col h-full w-full overflow-hidden rounded-lg select-none">
-        <div className="flex items-center justify-center dark:bg-white/80 bg-black/80">
+      <div className="flex flex-col h-full w-full overflow-hidden select-none">
+        <div className="flex items-center justify-center">
           <img
-            className="w-full object-cover select-none aspect-video max-h-52"
+            className="w-full object-cover select-none aspect-video h-32 rounded-tl-lg rounded-tr-lg"
             src={item?.image_url || 'https://port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png'}
             draggable="false" alt="Item"
           />

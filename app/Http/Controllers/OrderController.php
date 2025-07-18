@@ -28,6 +28,17 @@ class OrderController extends Controller
         ]);
     }
 
+    public function delete($order) {
+        $userId = auth()->id();
+
+        $orderId = $order;
+
+        DB::table('orders')
+            ->where('id', $orderId)
+            ->where('user_id', $userId)
+            ->delete();
+    }
+
     public function show() {
         $userId = auth()->id();
         
