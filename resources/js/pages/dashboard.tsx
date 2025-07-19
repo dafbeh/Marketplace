@@ -33,7 +33,7 @@ export default function Dashboard() {
   const { items, user } = usePage<PageProps>().props;
   const [ data, setData ] = React.useState([]);
 
-  const apiKey = "ot64W5D9HQ0JTBsqmZOqibjMUrPvZFUT"
+  const apiKey = ""
   const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTsForCollection`;
 
   useEffect(() => {
