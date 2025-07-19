@@ -8,6 +8,8 @@ import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import AddItemMod from '@/pages/Create';
 import { Link } from '@inertiajs/react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -29,6 +31,30 @@ type PageProps = {
 export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const { items, user } = usePage<PageProps>().props;
+  const [ data, setData ] = React.useState([]);
+
+  const apiKey = "ot64W5D9HQ0JTBsqmZOqibjMUrPvZFUT"
+  const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTsForCollection`;
+
+  useEffect(() => {
+    const fetchData = async () =>{
+      try {
+        const {data: response} = await axios.get(baseURL,
+          {
+            params: {
+              collectionSlug: 'proof-moonbirds',
+              withMetadata: true
+            }
+          }
+        );
+        setData(response.nfts);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+
+    fetchData();
+  }, []);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -45,15 +71,14 @@ export default function Dashboard() {
                         <AddItem />
                       </div>
                     )}
-                    {items.map(item => (
+                    {data.map(item => (
                       <div
-                        key={item.id}
+                        key={item.tokenId}
                         className="relative aspect-[4/6] cursor-pointer rounded-lg
                          hover:scale-102 ease-in-out transition duration-300 border-1 border-gray-900"
                       >
-                        <Link href={`/items/${item.id}`}>
-                          <ItemBox className="" item={item} />
-                        </Link>
+                        <img src={ item.image.cachedUrl }></img>
+                        <span> {item.attributes?.value ?? "N/A"} </span>
                     </div>
                     ))}
                 </div>
