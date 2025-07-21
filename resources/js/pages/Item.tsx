@@ -22,6 +22,7 @@ export default function Item({ address, id }: Item) {
   interface NFTData {
     collection?: {
       name?: string;
+      slug?: string;
     };
     contract?: {
       address: string;
@@ -63,8 +64,8 @@ export default function Item({ address, id }: Item) {
                 <Head title="hi" />
                 <div className="flex justify-between">
                   <div className='p-3 w-18'>
-                    <Link href="/dashboard">
-                      <ArrowLeft size={44} className="bg-gray-900 hover:bg-gray-700 p-2 rounded-full" />
+                    <Link href={"/collection/" + data.collection?.slug}>
+                      <ArrowLeft size={44} color="#000000ff" className="bg-[#cfcfcf] hover:bg-gray-100 p-2 rounded-lg" />
                     </Link>
                   </div>
                 </div>

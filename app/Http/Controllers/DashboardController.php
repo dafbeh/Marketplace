@@ -10,11 +10,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $items = DB::table('items')->get();
+        return Inertia::render('dashboard');
+    }
 
-        return Inertia::render('dashboard', [
-            'items' => $items,
-            'user' => auth()->user(),
+    public function show($id)
+    {
+        return Inertia::render('NFTBoard', [
+            'id' => $id,
         ]);
     }
 }
