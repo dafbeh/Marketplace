@@ -40,11 +40,11 @@ export function DataTable<TData extends { id: string }, TValue>({
     })
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border font-mono">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} noHover>
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>

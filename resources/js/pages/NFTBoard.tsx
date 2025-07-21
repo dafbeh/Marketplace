@@ -5,10 +5,8 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
-import AddItemMod from '@/pages/Create';
 import { useEffect } from 'react';
 import axios from 'axios';
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

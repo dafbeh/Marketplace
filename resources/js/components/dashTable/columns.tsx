@@ -38,7 +38,12 @@ export const columns: ColumnDef<Payment>[] = [
           )
         },
         cell: ({ getValue }) => (
-          <span>{String(getValue())} <span className="text-white/60 pl-1">ETH</span></span>
+          <div className="flex tabular-nums">
+            <span className="inline-block text-right w-20">
+              {parseFloat(getValue() as string).toFixed(4)}
+            </span>
+            <span className="text-white/60 pl-2">ETH</span>
+          </div>
         )
     },
   {
