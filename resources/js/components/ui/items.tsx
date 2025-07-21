@@ -1,34 +1,32 @@
+import { router } from '@inertiajs/react';
+
 interface ItemBox {
-  className?: string;
-  item?: {
-    id: number;
-    name: string;
-    description?: string;
-    price: number;
-    quantity: number;
-    category?: string;
-    image_url?: string;
-  }
+  image: string;
+  price?: number;
+  id: string;
+  address: string;
 }
 
-export function ItemBox({ className, item }: ItemBox) {
+export function ItemBox({ image, price, id, address  }: ItemBox) {
   return (
-    <div className={className}>
-      <div className="flex flex-col h-full w-full overflow-hidden select-none">
-        <div className="flex items-center justify-center">
-          <img
-            className="w-full object-cover select-none aspect-video h-32 rounded-tl-lg rounded-tr-lg"
-            src={item?.image_url || 'https://port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png'}
-            draggable="false" alt="Item"
-          />
-        </div>
-        <div className="flex-col flex p-2 dark:text-white">
-          {item && <span className="font-bold text-xl">{item.name}</span>}
-            <span className="font-bold text-sm dark:text-white/80">{item?.description}</span>
-        </div>
-        <div className="absolute bottom-2 right-2 gap-[1px] dark:bg-white/20 bg-black/80 border-1 rounded-full">
-          <span className="font-bold text-xl dark:text-green-300 text-white px-4">${item?.price.toLocaleString()}</span>
-        </div>
+    <div className="flex flex-col h-full">
+      <div className="overflow-hidden" onClick={() => router.visit(`/items/${address}/${id}`)}>
+        <img className='full object-cover transform transition-transform duration-500 hover:scale-110'
+            src={ image }></img>
+      </div>
+      <div className="flex h-1/6 items-center justify-center">
+        <svg className="w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" 
+            image-rendering="optimizeQuality" shape-rendering="geometricPrecision" 
+            text-rendering="geometricPrecision" viewBox="0 0 784.37 1277.39"><g fill-rule="nonzero">
+              <path fill="#ffffffff" d="m392.07 0-8.57 29.11v844.63l8.57 8.55 392.06-231.75z"/>
+              <path fill="#8C8C8C" d="M392.07 0 0 650.54l392.07 231.75V472.33z"/>
+              <path fill="#ffffffff" d="m392.07 956.52-4.83 5.89v300.87l4.83 14.1 392.3-552.49z"/>
+              <path fill="#8C8C8C" d="M392.07 1277.38V956.52L0 724.89z"/>
+              <path fill="#141414" d="m392.07 882.29 392.06-231.75-392.06-178.21z"/>
+              <path fill="#393939" d="m0 650.54 392.07 231.75V472.33z"/></g>
+        </svg>
+        <span className='flex flex pl-1'> { price } </span> 
       </div>
     </div>
   );

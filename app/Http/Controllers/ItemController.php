@@ -43,14 +43,11 @@ class ItemController extends Controller
         return redirect()->route('dashboard')->with('success', 'Item deleted successfully');
     }
 
-    public function show($id)
+    public function show($address, $id)
     {
-        $item = DB::table('items')->find($id);
-
-        if (!$item) {
-            return redirect()->route('dashboard')->with('error', 'Item not found');
-        }
-
-        return Inertia::render('Item', ['item' => $item]);
+        return Inertia::render('Item', [
+            'address' => $address,
+            'id' => $id,
+        ]);
     }
 }

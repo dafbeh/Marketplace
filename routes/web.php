@@ -15,7 +15,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
+    Route::get('/items/{address}/{id}', [ItemController::class, 'show'])->name('items.show');
 
     Route::post('/items/buy/{item}', [OrderController::class, 'create'])->name('orders.create');
 
