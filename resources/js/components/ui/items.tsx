@@ -10,8 +10,9 @@ interface ItemBox {
 export function ItemBox({ image, price, id, address  }: ItemBox) {
   return (
     <div className="flex flex-col h-full">
-      <div className="overflow-hidden" onClick={() => router.visit(`/items/${address}/${id}`)}>
-        <img className='full object-cover transform transition-transform duration-500 hover:scale-110'
+      <div className="overflow-hidden rounded-t-lg" onClick={() => router.visit(`/items/${address}/${id}`)}>
+        <img className='full object-cover transform transition-transform 
+            duration-500 hover:scale-110'
             src={ image }></img>
       </div>
       <div className="flex h-1/6 items-center justify-center">

@@ -65,7 +65,7 @@ export default function NFTBoard( id : PageProps ) {
                   {data.map(item => (
                     <div
                       key={item.tokenId}
-                      className="bg-gray-800/80 relative aspect-[5/6] cursor-pointer rounded-lg
+                      className="bg-mute/50 ring-1 ring-white/20 relative aspect-[5/6] cursor-pointer rounded-lg
                         ease-in-out transition duration-300 border-1 border-gray-900"
                     >
                     <ItemBox id={item.tokenId} address={item.contract.address} image={item.image.cachedUrl} price={item.contract.openSeaMetadata?.floorPrice} />
