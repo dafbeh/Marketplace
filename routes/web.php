@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Middleware\AdminOnly;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FavouritesController;
 
 
 Route::get('/', function () {
@@ -22,6 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/items/buy/{item}', [OrderController::class, 'create'])->name('orders.create');
 
     Route::get('/orders', [OrderController::class, 'show'])->name('orders.show');
+
+    Route::get('/favourites', [FavouritesController::class, 'show'])->name('favourites.show');
+
+    Route::post('/items/favourites', [FavouritesController::class, 'store'])->name('favourites.store');
 
     Route::delete('/orders/delete/{order}', [OrderController::class, 'delete'])->name('orders.delete');
 });

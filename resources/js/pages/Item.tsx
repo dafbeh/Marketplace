@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { ArrowLeft, Trash2 } from 'lucide-react';
+import { ArrowLeft, Bookmark } from 'lucide-react';
 import { Link, router, Head } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 import axios from 'axios';
@@ -67,6 +67,17 @@ export default function Item({ address, id }: Item) {
                     <Link href={"/collection/" + data.collection?.slug}>
                       <ArrowLeft size={44} color="#000000ff" className="bg-[#cfcfcf] hover:bg-gray-100 p-2 rounded-lg" />
                     </Link>
+                  </div>
+                  <div className="p-3">
+                    <div
+                      onClick={() =>
+                        router.post('/items/favourites', {
+                          address: address,
+                          nft_id: id,
+                        })
+                      }>
+                      <Bookmark size={44} color="#000000ff" className="bg-[#cfcfcf] hover:bg-gray-100 p-2 rounded-lg" />
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center flex-col w-full h-full">

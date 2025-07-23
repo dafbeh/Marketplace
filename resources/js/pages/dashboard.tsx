@@ -68,6 +68,7 @@ export default function Dashboard() {
       
         setIsLoading(false);
         setData(formattedData);
+        console.log(response);
       } catch (error) {
         console.error("Error fetching OpenSea data:", error.message);
       }

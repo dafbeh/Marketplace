@@ -9,10 +9,10 @@ interface ItemBox {
 
 export function ItemBox({ image, price, id, address  }: ItemBox) {
   return (
-    <div className="flex flex-col h-full">
-      <div className="overflow-hidden rounded-t-lg" onClick={() => router.visit(`/items/${address}/${id}`)}>
-        <img className='full object-cover transform transition-transform 
-            duration-500 hover:scale-110'
+    <div className="flex flex-col h-full ">
+      <div className="overflow-hidden rounded-t-lg aspect-[4/4]" onClick={() => router.visit(`/items/${address}/${id}`)}>
+        <img className='full object-cover transform transition-transform scale-105
+            duration-500 hover:scale-110 h-full '
             src={ image }></img>
       </div>
       <div className="flex h-1/6 items-center justify-center">
@@ -27,7 +27,7 @@ export function ItemBox({ image, price, id, address  }: ItemBox) {
               <path fill="#141414" d="m392.07 882.29 392.06-231.75-392.06-178.21z"/>
               <path fill="#393939" d="m0 650.54 392.07 231.75V472.33z"/></g>
         </svg>
-        <span className='flex flex pl-1'> { price } </span> 
+        <span className='flex pl-1 py-5'> { price } </span> 
       </div>
     </div>
   );
