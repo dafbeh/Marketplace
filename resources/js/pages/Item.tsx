@@ -74,6 +74,7 @@ export default function Item({ address, id }: Item) {
                         router.post('/items/favourites', {
                           address: address,
                           nft_id: id,
+                          image_url: data.image.cachedUrl,
                         })
                       }>
                       <Bookmark size={44} color="#000000ff" className="bg-[#cfcfcf] hover:bg-gray-100 p-2 rounded-lg" />

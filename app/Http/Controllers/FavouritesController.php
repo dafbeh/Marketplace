@@ -18,6 +18,7 @@ class FavouritesController extends Controller
                 'id as favourite_id',
                 'address',
                 'nft_id',
+                'image_url',
                 'created_at'
             )
             ->orderBy('id', 'desc')
@@ -33,12 +34,14 @@ class FavouritesController extends Controller
         $validated = $request->validate([
             'address' => 'required|string',
             'nft_id' => 'required|numeric',
+            'image_url' => 'required|string',
         ]);
 
         DB::table('favourites')->insert([
             'user_id' => $userId,
             'address' => $validated['address'],
             'nft_id' => $validated['nft_id'],
+            'image_url' => $validated['image_url'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
