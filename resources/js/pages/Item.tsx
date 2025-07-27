@@ -58,52 +58,58 @@ export default function Item({ address, id }: Item) {
     fetchData();
   }, []);
 
-    return (
-        <div>
-            <AppLayout breadcrumbs={breadcrumbs}>
-                <Head title="hi" />
-                <div className="flex justify-between">
-                  <div className='p-3 w-18'>
-                    <Link href={"/collection/" + data.collection?.slug}>
-                      <ArrowLeft size={44} color="#000000ff" className="bg-[#cfcfcf] hover:bg-gray-100 p-2 rounded-lg" />
-                    </Link>
-                  </div>
-                  <div className="p-3">
-                    <div
-                      onClick={() =>
-                        router.post('/items/favourites', {
-                          address: address,
-                          name: data.collection?.name,
-                          nft_id: id,
-                          image_url: data.image.cachedUrl,
-                        })
-                      }>
-                      <Bookmark size={44} color="#000000ff" className="bg-[#cfcfcf] hover:bg-gray-100 p-2 rounded-lg" />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center flex-col w-full h-full">
-                    <h1 className="font-bold text-3xl pb-2">{ data.collection?.name }</h1>
-                    <img src={data.image?.cachedUrl || 'https://port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png'} 
-                        className="w-[500px] object-cover rounded-lg object-contain" />
-                    <span className="text-gray-500 w-[500px] pt-3 text-1xl pb-2">Address: {data.contract?.address}</span>
-                    <form method="POST" action={`/items/buy/${data.contract?.address}`}>
-                      <input
-                        type="hidden"
-                        name="_token"
-                        value={document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''}
-                      />
-                      <input type="hidden" name="item_id" value={id} />
-                      <input type="hidden" name="total_price" value="55" />
-                      <button className="bg-green-400 p-3 px-10 rounded-lg 
-                          text-black font-bold select-none duration-300 transition-all
-                          hover:bg-green-300 hover:scale-105 hover:shadow-xl shadow-green-800 
-                          cursor-pointer">
-                            Buy
-                      </button>
-                    </form>
-                </div>
-            </AppLayout>
+  return (
+    <div>
+      <AppLayout breadcrumbs={breadcrumbs}>
+        <Head title="hi" />
+        <div className="flex justify-between">
+          <div className='p-3 w-18'>
+            <Link href={"/collection/" + data.collection?.slug}>
+              <ArrowLeft size={44} color="#ffffff" className="p-2 hover:scale-120 transition-all duration-300 rounded-lg" />
+            </Link>
+          </div>
         </div>
-    );
+        <div className="flex items-center flex-col w-full h-full">
+          <h1 className="font-bold text-3xl pb-2">{ data.collection?.name }</h1>
+          <img src={data.image?.cachedUrl || 'https://port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png'} 
+              className="w-[500px] object-cover rounded-lg object-contain" />
+          <span className="text-gray-500 w-[500px] pt-3 text-1xl pb-2">Address: {data.contract?.address}</span>
+          <form method="POST" action={`/items/buy/${data.contract?.address}`}>
+            <input
+              type="hidden"
+              name="_token"
+              value={document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''}
+            />
+            <input type="hidden" name="item_id" value={id} />
+            <input type="hidden" name="total_price" value="55" />                    
+          </form>
+        </div>
+        <div className='fixed bottom-5 right-5 flex'>
+          <div className='rounded-xl flex overflow-hidden hover:scale-105 gap-2 p-2
+              transition-all duration-300 bg-muted ring-2 ring-gray-100'>
+            <button className="bg-green-400 p-3 px-10 rounded-lg 
+                text-black font-bold select-none duration-200 transition-all
+                hover:bg-green-300 hover:shadow-md shadow-green-800 
+                cursor-pointer">
+                  Buy
+            </button>
+            <div
+              onClick={() =>
+                router.post('/items/favourites', {
+                  address: address,
+                  name: data.collection?.name,
+                  nft_id: id,
+                  image_url: data.image.cachedUrl,
+                })
+              }>
+                <Bookmark size={44} color="#000000ff" className="bg-yellow-400 p-3 rounded-lg 
+                text-black font-bold select-none duration-200 transition-all
+                hover:bg-yellow-300 hover:shadow-md shadow-yellow-800 
+                cursor-pointer" />
+            </div>
+          </div>
+        </div>
+      </AppLayout>
+    </div>
+  );
 }
