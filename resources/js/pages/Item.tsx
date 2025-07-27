@@ -73,6 +73,7 @@ export default function Item({ address, id }: Item) {
                       onClick={() =>
                         router.post('/items/favourites', {
                           address: address,
+                          name: data.collection?.name,
                           nft_id: id,
                           image_url: data.image.cachedUrl,
                         })

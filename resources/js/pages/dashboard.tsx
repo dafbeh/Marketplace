@@ -13,33 +13,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const data2 = [
-  {
-    name: "Moon Birds",
-    id: "proof-moonbirds",
-    floorprice: 1.769,
-    owners: 3842,
-  },
-  {
-    name: "Lil Pudgys",
-    id: "lilpudgys",
-    floorprice: 1.727,
-    owners: 9840,
-  },
-  {
-    name: "Board Ape Yacht Club",
-    id: "boredapeyachtclub",
-    floorprice: 12.50,
-    owners: 5514,
-  },
-  {
-    name: "Doodles",
-    id: "doodles-official",
-    floorprice: 1.0899,
-    owners: 4142,
-  },
-]
-
 export default function Dashboard() {
   const [ data, setData ] = React.useState();
   const [ isLoading, setIsLoading ] = React.useState(true);

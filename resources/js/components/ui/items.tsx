@@ -31,7 +31,7 @@ export function ItemBox({ image, price, id, address  }: ItemBox) {
         )}
 
         <img className='full object-cover transform transition-transform scale-105
-          duration-500 hover:scale-110 h-full '
+          duration-500 hover:scale-110 h-full w-full'
           src={ image }
           onLoad={handleImageLoad}
           style={{ display: isLoaded ? 'block' : 'none' }}>

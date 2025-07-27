@@ -16,12 +16,13 @@ class FavouritesController extends Controller
             ->where('user_id', $userId)
             ->select(
                 'id as favourite_id',
+                'name',
                 'address',
                 'nft_id',
                 'image_url',
                 'created_at'
             )
-            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return Inertia::render('Favourites', ['items' => $favourites]);
@@ -33,6 +34,7 @@ class FavouritesController extends Controller
 
         $validated = $request->validate([
             'address' => 'required|string',
+            'name' => 'required|string|max:255',
             'nft_id' => 'required|numeric',
             'image_url' => 'required|string',
         ]);
@@ -40,6 +42,7 @@ class FavouritesController extends Controller
         DB::table('favourites')->insert([
             'user_id' => $userId,
             'address' => $validated['address'],
+            'name' => $validated['name'],
             'nft_id' => $validated['nft_id'],
             'image_url' => $validated['image_url'],
             'created_at' => now(),
