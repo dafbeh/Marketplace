@@ -5,14 +5,14 @@ const ItemSkeleton = ({ cards }: { cards: number }) => {
   return Array(cards)
   .fill(0)
   .map((item, i) => (
-    <div key={i} className="aspect-[5/6]">
+    <div key={i} className="">
         <SkeletonTheme
             baseColor="#323333ff"
             highlightColor="#555555ff"
             borderRadius="0.5rem"
             duration={1}
         ><div className="top-col">
-            <Skeleton height={300} />
+            <Skeleton height={200} />
         </div>
         <div className="bottom-col">
             <Skeleton count={1} height={40} style={{ marginTop: "1rem" }}/>
