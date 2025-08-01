@@ -39,6 +39,18 @@ class FavouritesController extends Controller
             'image_url' => 'required|string',
         ]);
 
+        $existing = DB::table('favourites')
+            ->where('user_id', $userId)
+            ->where('nft_id', $validated['nft_id'])
+            ->first();
+
+        if ($existing) {
+            DB::table('favourites')
+            ->where('id', $existing->id)
+            ->delete();
+            return;
+        }
+
         DB::table('favourites')->insert([
             'user_id' => $userId,
             'address' => $validated['address'],
