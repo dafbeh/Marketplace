@@ -15,9 +15,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Item {
   address: string;
   id: number;
+  favourited: boolean;
 }
 
-export default function Item({ address, id }: Item) {
+export default function Item({ address, id, favourited }: Item) {
+
+  console.log(favourited);
 
   interface NFTData {
     collection?: {
@@ -115,10 +118,18 @@ export default function Item({ address, id }: Item) {
                   image_url: data.image.cachedUrl,
                 })
               }>
-                <Bookmark size={48} color="#000000ff" className="bg-yellow-400 p-3 rounded-lg 
-                text-black font-bold select-none duration-200 transition-all
-                hover:bg-yellow-300 hover:shadow-md shadow-yellow-800 
-                cursor-pointer" />
+              {favourited && 
+                <Bookmark size={48} color="#000000ff" className="bg-yellow-600 p-3 rounded-lg 
+                  text-black font-bold select-none duration-200 transition-all
+                  hover:bg-red-300 hover:shadow-md shadow-yellow-800 
+                  cursor-pointer" />
+              }
+              {!favourited && 
+                <Bookmark size={48} color="#fafafa" className="p-3 rounded-lg 
+                  text-black font-bold select-none duration-200 transition-all
+                  hover:bg-yellow-600 hover:shadow-md shadow-yellow-800 
+                  cursor-pointer" />
+              }
             </div>
           </div>
         </div>

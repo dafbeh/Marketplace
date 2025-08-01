@@ -45,9 +45,15 @@ class ItemController extends Controller
 
     public function show($address, $id)
     {
+        $isFavourite = DB::table('favourites')
+            ->where('user_id', auth()->id())
+            ->where('nft_id', $id)
+            ->exists();
+
         return Inertia::render('Item', [
             'address' => $address,
             'id' => $id,
+            'favourited' => $isFavourite,
         ]);
     }
 }
