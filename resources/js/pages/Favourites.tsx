@@ -2,6 +2,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import { Trash2 } from 'lucide-react';
+import { useEffect } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,6 +12,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Favourites({ items } : any) {
+    useEffect(() => {
+        router.reload({ only: ['items'] });
+    }, []);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Favourites" />

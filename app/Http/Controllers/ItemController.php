@@ -48,6 +48,7 @@ class ItemController extends Controller
         $isFavourite = DB::table('favourites')
             ->where('user_id', auth()->id())
             ->where('nft_id', $id)
+            ->where('address', $address)
             ->exists();
 
         return Inertia::render('Item', [

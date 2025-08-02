@@ -44,6 +44,7 @@ class FavouritesController extends Controller
         $existing = DB::table('favourites')
             ->where('user_id', $userId)
             ->where('nft_id', $validated['nft_id'])
+            ->where('address', $validated['address'])
             ->first();
 
         if ($existing) {
