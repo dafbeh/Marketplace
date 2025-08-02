@@ -11,7 +11,6 @@ class FavouritesController extends Controller
     public function show()
     {
         $userId = auth()->id();
-
         $favourites = DB::table('favourites')
             ->where('user_id', $userId)
             ->select(
@@ -25,7 +24,10 @@ class FavouritesController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return Inertia::render('Favourites', ['items' => $favourites]);
+        return Inertia::render('Favourites', [
+            'items' => $favourites,
+            'reload' => now()->toDateTimeString(),
+        ]);
     }
 
     public function store(Request $request)
@@ -60,5 +62,12 @@ class FavouritesController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    public function delete($id) {
+        DB::table('favourites')
+            ->where('id', $id)
+            ->where('user_id', auth()->id())
+            ->delete();
     }
 }

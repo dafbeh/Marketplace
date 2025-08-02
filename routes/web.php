@@ -28,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/items/favourites', [FavouritesController::class, 'store'])->name('favourites.store');
 
+    Route::delete('/favourites/delete/{id}', [FavouritesController::class, 'delete'])->name('favourites.delete');
+
     Route::delete('/orders/delete/{order}', [OrderController::class, 'delete'])->name('orders.delete');
 });
 
