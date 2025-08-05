@@ -24,6 +24,8 @@ export default function Dashboard() {
     owners: item.stats?.num_owners ?? 0,
   }));
 
+  console.log(formattedData)
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Dashboard" />

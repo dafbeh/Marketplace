@@ -2,6 +2,8 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { ArrowLeft, Bookmark } from 'lucide-react';
 import { Link, router, Head } from '@inertiajs/react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { CheckCircle2Icon } from "lucide-react"
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
@@ -37,6 +39,7 @@ export default function Item({ address, id, favourited }: Item) {
 
   const [ data, setData ] = React.useState<NFTData>({});
   const [ isLoaded, setIsLoaded ] = React.useState(false);
+  const[ alert, setAlert ] = React.useState(false);
 
   const apiKey = import.meta.env.VITE_ALCHEMY;
   const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTMetadata`;
@@ -44,6 +47,15 @@ export default function Item({ address, id, favourited }: Item) {
   const handleImageLoad = (): any => {
     setIsLoaded(true);
   }
+
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
 
   useEffect(() => {
     const fetchData = async () =>{
@@ -116,6 +128,10 @@ export default function Item({ address, id, favourited }: Item) {
                   name: data.collection?.name,
                   nft_id: id,
                   image_url: data.image.cachedUrl,
+                }, {
+                  onSuccess: () => {
+                    setAlert(true);
+                  }
                 })
               }>
               {favourited && 
@@ -133,6 +149,17 @@ export default function Item({ address, id, favourited }: Item) {
             </div>
           </div>
         </div>
+            <Alert className={`md:max-w-sm max-w-[calc(100vw-28px)] mx-auto fixed top-4 right-4 
+              transition-all duration-300 ease-in-out transform ${
+              alert ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
+            }`}>
+            <CheckCircle2Icon />
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>
+              {favourited ? 'You have favourited this item.' : 'You have unfavourited this item.'}
+            </AlertDescription>
+            </Alert>
       </AppLayout>
     </div>
   );
