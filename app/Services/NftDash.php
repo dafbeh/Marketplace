@@ -19,6 +19,8 @@ class NftDash
 
         if ($response->successful()) {
             return $response->json();
+        } else {
+            return null;
         }
 
         return null;

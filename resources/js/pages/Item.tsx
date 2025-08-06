@@ -6,6 +6,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { CheckCircle2Icon } from "lucide-react"
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { set } from 'nprogress';
+import SilverButton from '@/components/ui/silver-button'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,9 +23,6 @@ interface Item {
 }
 
 export default function Item({ address, id, favourited }: Item) {
-
-  console.log(favourited);
-
   interface NFTData {
     collection?: {
       name?: string;
@@ -31,14 +30,33 @@ export default function Item({ address, id, favourited }: Item) {
     };
     contract?: {
       address: string;
+      openSeaMetadata?: {
+        description?: string;
+        floorPrice?: number;
+      };
     }
     image?: {
       cachedUrl: string;
     }
   }
 
+  const ethSVG = (
+    <svg className="w-5 h-5"
+        xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" 
+        image-rendering="optimizeQuality" shape-rendering="geometricPrecision" 
+        text-rendering="geometricPrecision" viewBox="0 0 784.37 1277.39"><g fill-rule="nonzero">
+          <path fill="#ffffffff" d="m392.07 0-8.57 29.11v844.63l8.57 8.55 392.06-231.75z"/>
+          <path fill="#8C8C8C" d="M392.07 0 0 650.54l392.07 231.75V472.33z"/>
+          <path fill="#ffffffff" d="m392.07 956.52-4.83 5.89v300.87l4.83 14.1 392.3-552.49z"/>
+          <path fill="#8C8C8C" d="M392.07 1277.38V956.52L0 724.89z"/>
+          <path fill="#141414" d="m392.07 882.29 392.06-231.75-392.06-178.21z"/>
+          <path fill="#393939" d="m0 650.54 392.07 231.75V472.33z"/></g>
+    </svg>
+  )
+
   const [ data, setData ] = React.useState<NFTData>({});
   const [ isLoaded, setIsLoaded ] = React.useState(false);
+  const[ name, setName ] = React.useState('');
   const[ alert, setAlert ] = React.useState(false);
 
   const apiKey = import.meta.env.VITE_ALCHEMY;
@@ -69,6 +87,7 @@ export default function Item({ address, id, favourited }: Item) {
           }
         );
         setData(response);
+        setName(response.collection?.name || '');
         console.log(response);
       } catch (error) {
         console.error(error.message);
@@ -96,9 +115,15 @@ export default function Item({ address, id, favourited }: Item) {
                   className="object-cover object-contain pb-4" />
             </div>
             <div className="md:px-5 md:py-3 pb-30">
-              <h1 className="font-bold text-3xl pb-2 p-1 md:p-0">{ data.collection?.name } #{id}</h1>
-              <p className="break-all text-gray-500 pt-3 text-base w-full">
-                {address}
+              <h1 className="font-bold text-3xl p-1 md:p-0">{ data.collection?.name } #{id}</h1>
+              <SilverButton text={
+                <span className="flex items-center justify-center gap-1">
+                  {ethSVG}
+                  {data.contract?.openSeaMetadata?.floorPrice ?? 'No Price'}
+                </span>
+              } />
+              <p className="text-gray-500 text-base max-w-96">
+                {data.contract?.openSeaMetadata?.description || 'No description available.'}
               </p>
             </div>
             <form method="POST" action={`/items/buy/${data.contract?.address}`}>
@@ -156,8 +181,8 @@ export default function Item({ address, id, favourited }: Item) {
             }`}>
             <CheckCircle2Icon />
             <AlertTitle>Success</AlertTitle>
-            <AlertDescription>
-              {favourited ? 'You have favourited this item.' : 'You have unfavourited this item.'}
+            <AlertDescription className={!favourited ? "text-red-500" : "text-gray-500"}>
+              {favourited ? 'You have favourited ' + name + ' #' + id + '.' : 'You have unfavourited ' + name + ' #' + id + '.'}
             </AlertDescription>
             </Alert>
       </AppLayout>

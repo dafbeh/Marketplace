@@ -15,6 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Favourites({ items }: any) {
   const [alert, setAlert] = useState(false);
+  const [ name, setName ] = useState('');
 
   useEffect(() => {
     router.reload({ only: ['items'] });
@@ -52,6 +53,7 @@ export default function Favourites({ items }: any) {
                   className="bg-red-500/70 hover:bg-red-600/70 p-3 cursor-pointer rounded-lg"
                   onClick={e => {
                     e.stopPropagation();
+                    setName(item.name + ' #' + item.nft_id || 'Unknown');
                     if (window.confirm('Are you sure you want to remove this item from favourites?')) {
                       router.delete(route('favourites.delete', item.favourite_id));
                       setAlert(true);
@@ -71,8 +73,8 @@ export default function Favourites({ items }: any) {
           }`}>
             <CheckCircle2Icon />
             <AlertTitle>Success</AlertTitle>
-            <AlertDescription>
-              You have removed an item from your favourites list.
+            <AlertDescription className="text-red-500">
+              You have removed {name} from your favourites list.
             </AlertDescription>
           </Alert>
       </div>
