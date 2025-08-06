@@ -126,7 +126,12 @@ export default function Item({ address, id, favourited }: Item) {
                 {data.contract?.openSeaMetadata?.description || 'No description available.'}
               </p>
             </div>
-            <form method="POST" action={`/items/buy/${data.contract?.address}`}>
+          </div>
+        </div>
+        <div className='fixed bottom-5 right-5 flex'>
+          <div className='rounded-xl flex overflow-hidden hover:scale-102 gap-2 p-2
+              transition-all duration-300 bg-muted ring-1 ring-gray-100/50'>
+              <form method="POST" action={`/items/buy/${data.contract?.address}`}>
               <input
                 type="hidden"
                 name="_token"
@@ -134,18 +139,13 @@ export default function Item({ address, id, favourited }: Item) {
               />
               <input type="hidden" name="item_id" value={id} />
               <input type="hidden" name="total_price" value="55" />                    
-            </form>
-          </div>
-        </div>
-        <div className='fixed bottom-5 right-5 flex'>
-          <div className='rounded-xl flex overflow-hidden hover:scale-102 gap-2 p-2
-              transition-all duration-300 bg-muted ring-1 ring-gray-100/50'>
-            <button className="bg-blue-400 p-3 px-10 rounded-lg 
+              <button className="bg-blue-400 p-3 px-10 rounded-lg 
                 text-black font-bold select-none duration-200 transition-all
                 hover:bg-blue-300 hover:shadow-md shadow-blue-800 
                 cursor-pointer">
                   Buy
-            </button>
+              </button>
+              </form>
             <div
               onClick={() =>
                 router.post('/items/favourites', {
