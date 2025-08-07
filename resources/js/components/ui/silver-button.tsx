@@ -51,7 +51,7 @@ const SpotlightButton = ({ text }: any) => {
   return (
     <button
       ref={btnRef}
-      className="relative border-2 w-full h-20 rounded-lg text-lg font-medium text-white overflow-hidden hover:shadow-xl hover:scale-105 transition-transform active:scale-95"
+      className="relative border-2 w-full h-20 rounded-lg text-lg font-medium dark:text-white text-black overflow-hidden hover:shadow-xl hover:scale-105 transition-transform active:scale-95"
     >
       {text}
       <span

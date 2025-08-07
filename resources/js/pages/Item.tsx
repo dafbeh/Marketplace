@@ -8,6 +8,12 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { set } from 'nprogress';
 import SilverButton from '@/components/ui/silver-button'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -37,7 +43,15 @@ export default function Item({ address, id, favourited }: Item) {
     }
     image?: {
       cachedUrl: string;
-    }
+    };
+    raw?: {
+      metadata?: {
+        attributes?: Array<{
+          trait_type?: string;
+          value?: string;
+        }>;
+      };
+    };
   }
 
   const ethSVG = (
@@ -122,9 +136,32 @@ export default function Item({ address, id, favourited }: Item) {
                   {data.contract?.openSeaMetadata?.floorPrice ?? 'No Price'}
                 </span>
               } />
-              <p className="text-gray-500 text-base max-w-96">
-                {data.contract?.openSeaMetadata?.description || 'No description available.'}
-              </p>
+              <Accordion type="single" collapsible className='max-w-92'>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Description</AccordionTrigger>
+                  <AccordionContent>
+                    {data.contract?.openSeaMetadata?.description || 'No description available.'}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>Properties</AccordionTrigger>
+                  <AccordionContent>
+                    {data.raw?.metadata?.attributes.map((attr: any, index: number) => (
+                      <div key={index} className="flex justify-between">
+                        <span className="font-medium">{attr.trait_type}:</span>
+                        <span>{attr.value}</span>
+                      </div>
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>NFT Data</AccordionTrigger>
+                  <AccordionContent>
+                    <b>Address:</b> {address} <br />
+                    <b>ID:</b> {id}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </div>
@@ -166,7 +203,7 @@ export default function Item({ address, id, favourited }: Item) {
                   cursor-pointer" />
               }
               {!favourited && 
-                <Bookmark size={48} color="#fafafa" className="p-3 rounded-lg 
+                <Bookmark size={48} color="#fafafa" className="dark:bg-white/0 bg-gray-700 p-3 rounded-lg 
                   text-black font-bold select-none duration-200 transition-all
                   hover:bg-yellow-600 hover:shadow-md shadow-yellow-800 
                   cursor-pointer" />

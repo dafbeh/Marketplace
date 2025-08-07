@@ -9,18 +9,22 @@ class NftDash
 {
     public function getDashNFT() {
         return Cache::remember('top_nfts', now()->addMinutes(30), function () {
-            $response = Http::withHeaders([
-                'x-api-key' => config('services.opensea.key'),
-            ])->get('https://api.opensea.io/api/v2/collections', [
-                'chain' => 'ethereum',
-                'order_by' => 'market_cap',
-                'order_direction' => 'desc'
-            ]);
+            try{
+                $response = Http::withHeaders([
+                    'x-api-key' => config('services.opensea.key'),
+                ])->get('https://api.opensea.io/api/v2/collections', [
+                    'chain' => 'ethereum',
+                    'order_by' => 'market_cap',
+                    'order_direction' => 'desc'
+                ]);
+            } catch(\Exception $e) {
+                return null;
+            }
+            
+
 
         if ($response->successful()) {
             return $response->json();
-        } else {
-            return null;
         }
 
         return null;
