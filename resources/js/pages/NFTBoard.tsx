@@ -61,7 +61,7 @@ export default function NFTBoard( id : PageProps ) {
           <div className="flex h-full flex-1 flex-col gap-4 p-4 overflow-x-auto">
               <div className="grid auto-rows-min gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 
                   2xl:grid-cols-7 3xl:grid-cols-20">
-                {isLoading && <ItemSkeleton cards={30} />}
+                {isLoading && <ItemSkeleton cards={40} />}
                   {data.map(item => (
                     <div
                       key={item.tokenId}

@@ -13,18 +13,33 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
-  const { props } = usePage();
+  interface TopNfts {
+    collections: {
+      name: string;
+      collection: string;
+      stats?: {
+        floor_price?: number;
+        num_owners?: number;
+      };
+    }[];
+  }
+
+  const { props } = usePage<{ topNfts?: TopNfts }>();
 
   const topNfts = props.topNfts?.collections;
-  
-  const formattedData = topNfts.map((item: any) => ({
-    name: item.name,
-    id: item.collection,
-    floorprice: item.stats?.floor_price ?? 0,
-    owners: item.stats?.num_owners ?? 0,
-  }));
 
-  console.log(formattedData)
+  let formattedData: { name: string; id: string; floorprice: number; owners: number }[] = [];
+  
+  if(topNfts) {
+    formattedData = topNfts.map((item: any) => ({
+      name: item.name,
+      id: item.collection,
+      floorprice: item.stats?.floor_price ?? 0,
+      owners: item.stats?.num_owners ?? 0,
+    }));
+
+    console.log(formattedData)
+  }
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>

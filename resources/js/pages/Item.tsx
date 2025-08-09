@@ -15,6 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Item',
@@ -126,9 +127,9 @@ export default function Item({ address, id, favourited }: Item) {
           <div className="md:flex">
             <div className='md:w-[500px] md:h-[300px] p-1 md:p-0'>
               <img onLoad={handleImageLoad} src={data.image?.cachedUrl} 
-                  className="object-cover object-contain pb-4" />
+                  className="rounded-lg" />
             </div>
-            <div className="md:px-5 md:py-3 pb-30">
+            <div className="md:px-5 md:py-3 pb-30 min-w-98">
               <h1 className="font-bold text-3xl p-1 md:p-0">{ data.collection?.name } #{id}</h1>
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
@@ -136,7 +137,7 @@ export default function Item({ address, id, favourited }: Item) {
                   {data.contract?.openSeaMetadata?.floorPrice ?? 'No Price'}
                 </span>
               } />
-              <Accordion type="single" collapsible className='max-w-92'>
+              <Accordion type="single" collapsible className='max-w-88'>
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Description</AccordionTrigger>
                   <AccordionContent>
@@ -197,15 +198,15 @@ export default function Item({ address, id, favourited }: Item) {
                 })
               }>
               {favourited && 
-                <Bookmark size={48} color="#000000ff" className="bg-yellow-600 p-3 rounded-lg 
+                <Bookmark size={48} color="#fafafa" className="bg-yellow-600 p-3 rounded-lg 
                   text-black font-bold select-none duration-200 transition-all
                   hover:bg-red-300 hover:shadow-md shadow-yellow-800 
                   cursor-pointer" />
               }
               {!favourited && 
                 <Bookmark size={48} color="#fafafa" className="dark:bg-white/0 bg-gray-700 p-3 rounded-lg 
-                  text-black font-bold select-none duration-200 transition-all
-                  hover:bg-yellow-600 hover:shadow-md shadow-yellow-800 
+                  text-black font-bold select-none duration-200 transition-all dark:hover:bg-yellow-600
+                  hover:shadow-md dark:shadow-yellow-800 shadow-gray-800
                   cursor-pointer" />
               }
             </div>

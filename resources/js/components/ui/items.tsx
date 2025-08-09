@@ -36,7 +36,6 @@ export function ItemBox({ image, price, id, address  }: ItemBox) {
           style={{ display: isLoaded ? 'block' : 'none' }}>
         </img>
 
-
       </div>
       <div className="flex h-1/6 items-center justify-center">
         <svg className="w-5 h-5"

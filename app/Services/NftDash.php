@@ -7,27 +7,30 @@ use Illuminate\Support\Facades\Http;
 
 class NftDash
 {
-    public function getDashNFT() {
+    public function getDashNFT()
+    {
         return Cache::remember('top_nfts', now()->addMinutes(30), function () {
-            try{
+            try {
                 $response = Http::withHeaders([
                     'x-api-key' => config('services.opensea.key'),
                 ])->get('https://api.opensea.io/api/v2/collections', [
                     'chain' => 'ethereum',
                     'order_by' => 'market_cap',
-                    'order_direction' => 'desc'
+                    'order_direction' => 'desc',
+                    'limit' => 10
                 ]);
-            } catch(\Exception $e) {
+            
+                if ($response->successful()) {
+                    return $response->json();
+                }
+            
+                \Log::error('OpenSea API error: ' . $response->body());
+                return null;
+            
+            } catch (\Exception $e) {
+                \Log::error('Error fetching NFTs: ' . $e->getMessage());
                 return null;
             }
-            
-
-
-        if ($response->successful()) {
-            return $response->json();
-        }
-
-        return null;
         });
     }
 }
