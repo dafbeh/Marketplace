@@ -189,7 +189,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          className="bg-sidebartext-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -239,7 +239,7 @@ function Sidebar({
       >
         <div
           data-sidebar="sidebar"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className="bg-sidebar/80 rounded-lg group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
         >
           {children}
         </div>
@@ -301,6 +301,10 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
 
 function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
+    <>
+    <div className="absolute w-full h-full">
+      <img className='w-full h-full blur-3xl opacity-50' src="https://persistent.oaistatic.com/burrito-nux/1920.webp" />
+    </div>
     <main
       data-slot="sidebar-inset"
       className={cn(
@@ -310,6 +314,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
       )}
       {...props}
     />
+    </>
   )
 }
 

@@ -159,3 +159,9 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Scrollbar color and width */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #fafaf3 #0a0a0a;
+}

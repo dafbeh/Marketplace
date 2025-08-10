@@ -6,7 +6,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { CheckCircle2Icon } from "lucide-react"
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { set } from 'nprogress';
 import SilverButton from '@/components/ui/silver-button'
 import {
   Accordion,
@@ -14,7 +13,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -137,7 +135,7 @@ export default function Item({ address, id, favourited }: Item) {
                   {data.contract?.openSeaMetadata?.floorPrice ?? 'No Price'}
                 </span>
               } />
-              <Accordion type="single" collapsible className='max-w-88'>
+              <Accordion type="single" collapsible className='md:max-w-88 w-full'>
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Description</AccordionTrigger>
                   <AccordionContent>
@@ -167,8 +165,8 @@ export default function Item({ address, id, favourited }: Item) {
           </div>
         </div>
         <div className='fixed bottom-5 right-5 flex'>
-          <div className='rounded-xl flex overflow-hidden hover:scale-102 gap-2 p-2
-              transition-all duration-300 bg-muted ring-1 ring-gray-100/50'>
+          <div className='rounded-lg flex overflow-hidden hover:scale-102 gap-2 p-2
+              transition-all duration-300 ring-2 ring-gray-100/20'>
               <form method="POST" action={`/items/buy/${data.contract?.address}`}>
               <input
                 type="hidden"
