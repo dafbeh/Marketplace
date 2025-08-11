@@ -6,9 +6,10 @@ interface ItemBox {
   price?: number;
   id: string;
   address: string;
+  slug: string;
 }
 
-export function ItemBox({ image, price, id, address  }: ItemBox) {
+export function ItemBox({ image, price, id, address, slug  }: ItemBox) {
   
   const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -18,7 +19,10 @@ export function ItemBox({ image, price, id, address  }: ItemBox) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="overflow-hidden rounded-t-lg aspect-[4/4]" onClick={() => router.visit(`/items/${address}/${id}`)}>
+      <div 
+        className="overflow-hidden rounded-t-lg aspect-[4/4]" 
+        onClick={() => router.visit(`/items/${slug}/${address}/${id}`)}
+      >
 
         {!isLoaded && (
           <div role="status" className='w-full h-full flex items-center justify-center'>

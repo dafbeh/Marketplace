@@ -43,7 +43,7 @@ class ItemController extends Controller
         return redirect()->route('dashboard')->with('success', 'Item deleted successfully');
     }
 
-    public function show($address, $id)
+    public function show($slug, $address, $id)
     {
         $isFavourite = DB::table('favourites')
             ->where('user_id', auth()->id())
@@ -54,6 +54,7 @@ class ItemController extends Controller
         return Inertia::render('Item', [
             'address' => $address,
             'id' => $id,
+            'slug' => $slug,
             'favourited' => $isFavourite,
         ]);
     }

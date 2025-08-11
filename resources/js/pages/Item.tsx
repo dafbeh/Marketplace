@@ -13,6 +13,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { DropDown } from "@/components/date-dropdown"
+import { CreateTable } from "@/components/table"
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,32 +27,28 @@ interface Item {
   address: string;
   id: number;
   favourited: boolean;
+  slug: string;
 }
 
-export default function Item({ address, id, favourited }: Item) {
+export default function Item({ address, id, favourited, slug }: Item) {
   interface NFTData {
-    collection?: {
+    nft?: {
       name?: string;
       slug?: string;
+      image_url?: string;
+      description?: string;
+      traits?: any;
     };
-    contract?: {
-      address: string;
-      openSeaMetadata?: {
-        description?: string;
-        floorPrice?: number;
-      };
-    }
-    image?: {
-      cachedUrl: string;
+    total?: {
+      floor_price?: string;
+      average_price?: string;
+      num_owners?: number;
     };
-    raw?: {
-      metadata?: {
-        attributes?: Array<{
-          trait_type?: string;
-          value?: string;
-        }>;
-      };
-    };
+    intervals?: {
+      average_price?: number;
+      sales?: number;
+      volume?: number;
+    }[];
   }
 
   const ethSVG = (
@@ -68,16 +66,15 @@ export default function Item({ address, id, favourited }: Item) {
   )
 
   const [ data, setData ] = React.useState<NFTData>({});
-  const [ isLoaded, setIsLoaded ] = React.useState(false);
+  const [ stats, setStats ] = React.useState<NFTData>({});
+  const [position, setPosition] = React.useState("0")
   const[ name, setName ] = React.useState('');
   const[ alert, setAlert ] = React.useState(false);
-
-  const apiKey = import.meta.env.VITE_ALCHEMY;
-  const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTMetadata`;
-
-  const handleImageLoad = (): any => {
-    setIsLoaded(true);
-  }
+  const apiKey = import.meta.env.VITE_OPENSEA;
+  const baseURL = `https://api.opensea.io/api/v2/chain/ethereum/contract/${address}/nfts/${id}`;
+  const headers = {
+    'X-API-KEY': apiKey,
+  };
 
   useEffect(() => {
     if (alert) {
@@ -91,16 +88,29 @@ export default function Item({ address, id, favourited }: Item) {
   useEffect(() => {
     const fetchData = async () =>{
       try {
-        const {data: response} = await axios.get(baseURL,
-          {
-            params: {
-              contractAddress: address,
-              tokenId: id
-            }
-          }
-        );
+        const { data: response } = await axios.get(baseURL, {
+          headers,
+        });
         setData(response);
-        setName(response.collection?.name || '');
+        setName(response.nft?.name || '');
+        console.log(response);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const baseURL2 = `https://api.opensea.io/api/v2/collections/${slug}/stats`;
+    useEffect(() => {
+    const fetchData = async () =>{
+      try {
+        const { data: response } = await axios.get(baseURL2, {
+          headers,
+        });
+        setStats(response);
+
         console.log(response);
       } catch (error) {
         console.error(error.message);
@@ -116,7 +126,7 @@ export default function Item({ address, id, favourited }: Item) {
         <Head title="hi" />
         <div className="flex justify-between">
           <div className='p-3 w-18'>
-            <Link href={"/collection/" + data.collection?.slug}>
+            <Link href={"/collection/" + data.nft?.slug}>
               <ArrowLeft size={44} color="#ffffff" className="p-2 hover:scale-120 transition-all duration-300 rounded-lg" />
             </Link>
           </div>
@@ -124,28 +134,35 @@ export default function Item({ address, id, favourited }: Item) {
         <div className="flex flex-col items-center h-full px-3 md:pr-20">
           <div className="md:flex">
             <div className='md:w-[500px] md:h-[300px] p-1 md:p-0'>
-              <img onLoad={handleImageLoad} src={data.image?.cachedUrl} 
+              <img src={data.nft?.image_url} 
                   className="rounded-lg" />
             </div>
             <div className="md:px-5 md:py-3 pb-30 min-w-98">
-              <h1 className="font-bold text-3xl p-1 md:p-0">{ data.collection?.name } #{id}</h1>
+              <h1 className="font-bold text-3xl p-1 md:p-0">{ data.nft?.name }</h1>
+              <div className="flex">
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
                   {ethSVG}
-                  {data.contract?.openSeaMetadata?.floorPrice ?? 'No Price'}
+                  {stats.total?.floor_price ?? 'No Price'}
                 </span>
-              } />
+              } header={'Floor Price:'} />
+              <SilverButton text={
+                <span className="flex items-center justify-center gap-1">
+                  {stats.total?.num_owners || 'n/a'}
+                </span>
+              } header={'Owners:'} />
+              </div>
               <Accordion type="single" collapsible className='md:max-w-88 w-full'>
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Description</AccordionTrigger>
                   <AccordionContent>
-                    {data.contract?.openSeaMetadata?.description || 'No description available.'}
+                    {data.nft?.description || 'No description available.'}
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
                   <AccordionTrigger>Properties</AccordionTrigger>
                   <AccordionContent>
-                    {data.raw?.metadata?.attributes.map((attr: any, index: number) => (
+                    {data.nft?.traits.map((attr: any, index: number) => (
                       <div key={index} className="flex justify-between">
                         <span className="font-medium">{attr.trait_type}:</span>
                         <span>{attr.value}</span>
@@ -160,6 +177,19 @@ export default function Item({ address, id, favourited }: Item) {
                     <b>ID:</b> {id}
                   </AccordionContent>
                 </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger>Sale Stats</AccordionTrigger>
+                  <AccordionContent>
+                    <CreateTable 
+                      averagePrice={stats.intervals?.[Number(position)]?.average_price} 
+                      sales={stats.intervals?.[Number(position)]?.sales} 
+                      volume={stats.intervals?.[Number(position)]?.volume}>
+                    </CreateTable>
+                    <div className="flex w-full justify-end pt-3">
+                      <DropDown value={position} onChange={setPosition} />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             </div>
           </div>
@@ -167,7 +197,7 @@ export default function Item({ address, id, favourited }: Item) {
         <div className='fixed bottom-5 right-5 flex'>
           <div className='rounded-lg flex overflow-hidden hover:scale-102 gap-2 p-2
               transition-all duration-300 ring-2 ring-gray-100/20'>
-              <form method="POST" action={`/items/buy/${data.contract?.address}`}>
+              <form method="POST" action={`/items/buy/${address}`}>
               <input
                 type="hidden"
                 name="_token"
@@ -186,9 +216,9 @@ export default function Item({ address, id, favourited }: Item) {
               onClick={() =>
                 router.post('/items/favourites', {
                   address: address,
-                  name: data.collection?.name,
+                  name: data.nft?.name,
                   nft_id: id,
-                  image_url: data.image.cachedUrl,
+                  image_url: data.nft?.image_url,
                 }, {
                   onSuccess: () => {
                     setAlert(true);
