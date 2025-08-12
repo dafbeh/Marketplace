@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('address');
             $table->string('name');
+            $table->string('slug');
             $table->integer('nft_id');
             $table->string('image_url');
             $table->timestamps();

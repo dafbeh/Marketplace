@@ -37,7 +37,7 @@ export default function Favourites({ items }: any) {
         {items.map((item: any) => (
           <div key={`${item.address}-${item.nft_id}`}
             className="mb-4 p-4 border rounded hover:bg-muted/50 cursor-pointer"
-            onClick={() => router.visit(`/items/${item.address}/${item.nft_id}`)}>
+            onClick={() => router.visit(`/items/${item.slug}/${item.address}/${item.nft_id}`)}>
             <div className="flex">
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center">

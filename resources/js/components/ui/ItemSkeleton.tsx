@@ -7,15 +7,15 @@ const ItemSkeleton = ({ cards }: { cards: number }) => {
   .map((item, i) => (
     <div key={i} className="">
         <SkeletonTheme
-            baseColor="#323333ff"
-            highlightColor="#555555ff"
+            baseColor="#595959ff"
+            highlightColor="#a8a8a8ff"
             borderRadius="0.5rem"
             duration={1}
         ><div className="top-col">
-            <Skeleton height={200} />
+            <Skeleton height={250} />
         </div>
         <div className="bottom-col">
-            <Skeleton count={1} height={40} style={{ marginTop: "1rem" }}/>
+            <Skeleton count={1} height={60} style={{ marginTop: "1rem" }}/>
         </div></SkeletonTheme>
         
     </div>

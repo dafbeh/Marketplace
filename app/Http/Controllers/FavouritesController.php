@@ -16,6 +16,7 @@ class FavouritesController extends Controller
             ->select(
                 'id as favourite_id',
                 'name',
+                'slug',
                 'address',
                 'nft_id',
                 'image_url',
@@ -37,6 +38,7 @@ class FavouritesController extends Controller
         $validated = $request->validate([
             'address' => 'required|string',
             'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
             'nft_id' => 'required|numeric',
             'image_url' => 'required|string',
         ]);
@@ -58,6 +60,7 @@ class FavouritesController extends Controller
             'user_id' => $userId,
             'address' => $validated['address'],
             'name' => $validated['name'],
+            'slug' => $validated['slug'],
             'nft_id' => $validated['nft_id'],
             'image_url' => $validated['image_url'],
             'created_at' => now(),

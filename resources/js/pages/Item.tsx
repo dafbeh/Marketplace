@@ -38,6 +38,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
       image_url?: string;
       description?: string;
       traits?: any;
+      collection?: string;
     };
     total?: {
       floor_price?: string;
@@ -126,7 +127,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
         <Head title="hi" />
         <div className="flex justify-between">
           <div className='p-3 w-18'>
-            <Link href={"/collection/" + data.nft?.slug}>
+            <Link href={"/collection/" + data.nft?.collection}>
               <ArrowLeft size={44} color="#ffffff" className="p-2 hover:scale-120 transition-all duration-300 rounded-lg" />
             </Link>
           </div>
@@ -138,7 +139,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
                   className="rounded-lg" />
             </div>
             <div className="md:px-5 md:py-3 pb-30 min-w-98">
-              <h1 className="font-bold text-3xl p-1 md:p-0">{ data.nft?.name }</h1>
+              <h1 className="font-bold text-3xl p-1 md:p-0">{ data.nft?.name || data.nft?.collection + " #" + id }</h1>
               <div className="flex">
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
@@ -217,6 +218,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
                 router.post('/items/favourites', {
                   address: address,
                   name: data.nft?.name,
+                  slug: data.nft?.collection,
                   nft_id: id,
                   image_url: data.nft?.image_url,
                 }, {
