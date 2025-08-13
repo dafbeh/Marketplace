@@ -30,6 +30,17 @@ interface Item {
   slug: string;
 }
 
+function fixName(name:string, slug: string, id: number, addId: boolean) {
+  let result = slug;
+  result = result.replace(/-/g, " ");
+  
+  result = result.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ');
+  if(addId) {
+    result += " #" + id
+  }
+  return result;
+}
+
 export default function Item({ address, id, favourited, slug }: Item) {
   interface NFTData {
     nft?: {
@@ -54,9 +65,9 @@ export default function Item({ address, id, favourited, slug }: Item) {
 
   const ethSVG = (
     <svg className="w-5 h-5"
-        xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" 
-        image-rendering="optimizeQuality" shape-rendering="geometricPrecision" 
-        text-rendering="geometricPrecision" viewBox="0 0 784.37 1277.39"><g fill-rule="nonzero">
+        xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" 
+        imageRendering="optimizeQuality" shapeRendering="geometricPrecision" 
+        textRendering="geometricPrecision" viewBox="0 0 784.37 1277.39"><g fillRule="nonzero">
           <path fill="#ffffffff" d="m392.07 0-8.57 29.11v844.63l8.57 8.55 392.06-231.75z"/>
           <path fill="#8C8C8C" d="M392.07 0 0 650.54l392.07 231.75V472.33z"/>
           <path fill="#ffffffff" d="m392.07 956.52-4.83 5.89v300.87l4.83 14.1 392.3-552.49z"/>
@@ -139,7 +150,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
                   className="rounded-lg" />
             </div>
             <div className="md:px-5 md:py-3 pb-30 min-w-98">
-              <h1 className="font-bold text-3xl p-1 md:p-0">{ data.nft?.name || data.nft?.collection + " #" + id }</h1>
+              <h1 className="font-bold text-3xl p-1 md:p-0">{!data.nft?.name.includes("#") ? data.nft?.name : fixName(data.nft?.name, slug, id, true)}</h1>
               <div className="flex">
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
@@ -217,7 +228,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
               onClick={() =>
                 router.post('/items/favourites', {
                   address: address,
-                  name: data.nft?.name,
+                  name: fixName(data.nft?.name, slug, id, false),
                   slug: data.nft?.collection,
                   nft_id: id,
                   image_url: data.nft?.image_url,

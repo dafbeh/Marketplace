@@ -19,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/collection/{id}', [DashboardController::class, 'show'])->name('collection.show');
 
     Route::get('/items/{slug}/{address}/{id}', [ItemController::class, 'show'])->name('items.show');
-
+    
     Route::post('/items/buy/{item}', [OrderController::class, 'create'])->name('orders.create');
 
     Route::get('/orders', [OrderController::class, 'show'])->name('orders.show');

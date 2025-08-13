@@ -28,14 +28,16 @@ export default function Dashboard() {
 
   const topNfts = props.topNfts?.collections;
 
+  console.log(props.topNfts)
+
   let formattedData: { name: string; id: string; floorprice: number; owners: number }[] = [];
   
   if(topNfts) {
     formattedData = topNfts.map((item: any) => ({
       name: item.name,
       id: item.collection,
-      floorprice: item.stats?.floor_price ?? 0,
-      owners: item.stats?.num_owners ?? 0,
+      floorprice: item.floor_price ?? 0,
+      owners: item.owners ?? 0,
     }));
 
     console.log(formattedData)
