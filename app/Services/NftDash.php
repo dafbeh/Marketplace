@@ -9,7 +9,7 @@ class NftDash
 {
     public function getDashNFT()
     {
-        return Cache::remember('top_nfts', now()->addMinutes(30), function () {
+        return Cache::remember('nfts', now()->addMinutes(30), function () {
             try {
                 $response = Http::withHeaders([
                     'x-api-key' => config('services.opensea.key'),
@@ -17,12 +17,12 @@ class NftDash
                     'chain' => 'ethereum',
                     'order_by' => 'market_cap',
                     'order_direction' => 'desc',
-                    'limit' => 20
+                    'limit' => '20',
                 ]);
 
                 if (!$response->successful()) {
                     \Log::error('OpenSea API error: ' . $response->body());
-                    return Cache::get('top_nfts');
+                    return Cache::get('nfts');
                 }
 
                 $array = $response->json();
@@ -61,7 +61,7 @@ class NftDash
 
             } catch (\Exception $e) {
                 \Log::error('Error fetching NFTs: ' . $e->getMessage());
-                return Cache::get('top_nfts');
+                return Cache::get('nfts');
             }
         });
     }

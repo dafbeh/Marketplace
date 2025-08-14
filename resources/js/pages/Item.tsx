@@ -31,6 +31,11 @@ interface Item {
 }
 
 function fixName(name:string, slug: string, id: number, addId: boolean) {
+  if (!name) return '';
+  if(name.includes("#") && name.length > 3) {
+    return name;
+  }
+
   let result = slug;
   result = result.replace(/-/g, " ");
   
@@ -135,7 +140,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
   return (
     <div>
       <AppLayout breadcrumbs={breadcrumbs}>
-        <Head title="hi" />
+        <Head title={fixName(data.nft?.name, slug, id, true)} />
         <div className="flex justify-between">
           <div className='p-3 w-18'>
             <Link href={"/collection/" + data.nft?.collection}>
@@ -150,7 +155,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
                   className="rounded-lg" />
             </div>
             <div className="md:px-5 md:py-3 pb-30 min-w-98">
-              <h1 className="font-bold text-3xl p-1 md:p-0">{!data.nft?.name.includes("#") ? data.nft?.name : fixName(data.nft?.name, slug, id, true)}</h1>
+              <h1 className="font-bold text-3xl p-1 md:p-0">{fixName(data.nft?.name, slug, id, true)}</h1>
               <div className="flex">
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
@@ -261,7 +266,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
             <CheckCircle2Icon />
             <AlertTitle>Success</AlertTitle>
             <AlertDescription className={!favourited ? "text-red-500" : "text-gray-500"}>
-              {favourited ? 'You have favourited ' + name + ' #' + id + '.' : 'You have unfavourited ' + name + ' #' + id + '.'}
+              {favourited ? 'You have favourited ' + fixName(data.nft?.name, slug, id, false) + ' #' + id + '.' : 'You have unfavourited ' + fixName(data.nft?.name, slug, id, false) + ' #' + id + '.'}
             </AlertDescription>
             </Alert>
       </AppLayout>

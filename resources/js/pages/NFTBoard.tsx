@@ -57,7 +57,7 @@ export default function NFTBoard( id : PageProps ) {
 
   return (
       <AppLayout breadcrumbs={breadcrumbs}>
-          <Head title="Collection" />
+          <Head title={data[0]?.collection?.name || "Collection"} />
           <div className="flex h-full flex-1 flex-col gap-4 p-4 overflow-x-auto">
               <div className="grid auto-rows-min gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 
                   2xl:grid-cols-7 3xl:grid-cols-20">
