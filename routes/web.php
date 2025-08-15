@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Middleware\AdminOnly;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavouritesController;
+use App\Http\Controllers\NFTController;
 
 
 Route::get('/', function () {
@@ -31,6 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/favourites/delete/{id}', [FavouritesController::class, 'delete'])->name('favourites.delete');
 
     Route::delete('/orders/delete/{order}', [OrderController::class, 'delete'])->name('orders.delete');
+
+    Route::get('/MyNft', [NFTController::class, 'show'])->name('nft.show');
 });
 
 Route::middleware(['auth', 'verified', AdminOnly::class])->group(function () {

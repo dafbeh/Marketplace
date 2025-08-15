@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Bookmark, Folder, LayoutGrid, HandCoins } from 'lucide-react';
+import { Bookmark, Folder, LayoutGrid, HandCoins, Coins } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -17,6 +17,11 @@ const mainNavItems: NavItem[] = [
         title: 'Favourites',
         href: '/favourites',
         icon: Bookmark,
+    },
+    {
+        title: 'My NFTs',
+        href: '/MyNft',
+        icon: Coins,
     },
     {
         title: 'Previous Orders',

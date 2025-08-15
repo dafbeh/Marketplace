@@ -169,7 +169,7 @@ export default function Item({ address, id, favourited, slug }: Item) {
                 </span>
               } header={'Owners:'} />
               </div>
-              <Accordion type="single" collapsible className='md:max-w-88 w-full'>
+              <Accordion type="single" collapsible className='md:max-w-97 w-full'>
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Description</AccordionTrigger>
                   <AccordionContent>
