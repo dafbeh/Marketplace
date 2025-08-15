@@ -3,7 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { ArrowLeft, Bookmark } from 'lucide-react';
 import { Link, router, Head } from '@inertiajs/react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { CheckCircle2Icon } from "lucide-react"
+import { CheckCircle2Icon, ArrowUpRight } from "lucide-react"
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import SilverButton from '@/components/ui/silver-button'
@@ -55,6 +55,9 @@ export default function Item({ address, id, favourited, slug }: Item) {
       description?: string;
       traits?: any;
       collection?: string;
+      owners?: {
+        address?: string;
+      }[];
     };
     total?: {
       floor_price?: string;
@@ -190,8 +193,23 @@ export default function Item({ address, id, favourited, slug }: Item) {
                 <AccordionItem value="item-3">
                   <AccordionTrigger>NFT Data</AccordionTrigger>
                   <AccordionContent>
-                    <b>Address:</b> {address} <br />
-                    <b>ID:</b> {id}
+
+                      <span className="truncate max-w-92 inline-block"><b>Address:</b>&nbsp;
+                        <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href={`https://etherscan.io/address/${address}`}>
+                        {address}
+                        </a>
+                      </span>
+                      <br />
+
+                      <span><b>ID:</b> {id}</span>
+
+                      <span className="truncate max-w-92 inline-block pt-1"><b>Owner:</b>&nbsp;
+                        <a className="text-blue-500" href={`/MyNft/${data.nft?.owners?.[0]?.address}`}>{data.nft?.owners?.[0]?.address || 'No owner'}
+                        </a>
+                      </span> 
+                      <br />
+
+
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">

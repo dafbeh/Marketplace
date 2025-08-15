@@ -41,7 +41,7 @@ export function ItemBox({ image, id, address, slug  }: ItemBox) {
 
       </div>
       <div className="flex h-1/6 items-center justify-center">
-        <span className='flex pl-1 py-5 font-medium'> { "#" + id } </span> 
+        <span className='flex pl-1 py-5 font-medium truncate inline-block'> { "#" + id } </span> 
       </div>
     </div>
   );

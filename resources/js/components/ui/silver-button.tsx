@@ -51,12 +51,15 @@ const SpotlightButton = ({ text, header }: any) => {
   return (
     <div className="relative flex flex-col items-center justify-center border-2 w-full h-20 rounded-lg text-lg font-medium dark:text-white text-black 
         overflow-hidden hover:shadow-xl hover:scale-105 transition-transform active:scale-95">
-      <p className="text-sm items-center mt-3">{header}</p>
       <button
         ref={btnRef}
-        className="w-full h-full -mt-4"
+        className="w-full h-full"
       >
-        {text}
+        <div className="flex flex-col justify-center items-center w-full h-full">
+          <p className="text-sm">{header}</p>
+          <p className="">{text}</p>
+        </div>
+
         <span
           ref={spanRef}
           className="pointer-events-none absolute w-70 h-70 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 rounded-full"

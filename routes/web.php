@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/orders/delete/{order}', [OrderController::class, 'delete'])->name('orders.delete');
 
     Route::get('/MyNft', [NFTController::class, 'show'])->name('nft.show');
+
+    Route::get('/MyNft/{address}', [NFTController::class, 'showIndv'])->name('nft.showIndv');
 });
 
 Route::middleware(['auth', 'verified', AdminOnly::class])->group(function () {

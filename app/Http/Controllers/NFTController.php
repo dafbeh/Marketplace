@@ -10,4 +10,10 @@ class NFTController extends Controller
     function show() {
         return Inertia::render('MyNft');
     }
+
+    function showIndv($address) {
+        return Inertia::render('MyNft', [
+            'input' => $address,
+        ]);
+    }
 }
