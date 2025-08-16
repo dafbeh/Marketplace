@@ -51,7 +51,7 @@ export default function Dashboard() {
       <Head title="Dashboard" />
       <div className="p-3 gap-3">
 
-        <h1 className="pb-2 font-bold text-xl">New Drops</h1>
+        <h1 className="pb-1 font-bold text-xl">New Drops</h1>
         <hr className="pb-2"/>
         <div className="h-60 aspect-[5/6]">
           New drops
