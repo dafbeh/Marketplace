@@ -31,9 +31,8 @@ interface Item {
 }
 
 function fixName(name:string, slug: string, id: number, addId: boolean) {
-  if (!name) return '';
-  if(name.includes("#") && name.length > 3) {
-    return name;
+  if(name && name.includes("#") && name.length < 3) {
+    return slug + " " + name;
   }
 
   let result = slug;
@@ -151,14 +150,14 @@ export default function Item({ address, id, favourited, slug }: Item) {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col items-center h-full px-3 md:pr-20">
+        <div className="flex flex-col items-center h-full">
           <div className="md:flex">
-            <div className='md:w-[500px] md:h-[300px] p-1 md:p-0'>
+            <div className='md:w-[500px] md:h-[300px]'>
               <img src={data.nft?.image_url} 
                   className="rounded-lg" />
             </div>
-            <div className="md:px-5 md:py-3 pb-30 min-w-98">
-              <h1 className="font-bold text-3xl p-1 md:p-0">{fixName(data.nft?.name, slug, id, true)}</h1>
+            <div className="pl-5 md:py-3">
+              <h1 className="font-bold text-3xl">{fixName(data.nft?.name, slug, id, true)}</h1>
               <div className="flex">
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
@@ -172,11 +171,11 @@ export default function Item({ address, id, favourited, slug }: Item) {
                 </span>
               } header={'Owners:'} />
               </div>
-              <Accordion type="single" collapsible className='md:max-w-97 w-full'>
-                <AccordionItem value="item-1">
+              <Accordion type="single" collapsible className='w-100'>
+                <AccordionItem className="" value="item-1">
                   <AccordionTrigger>Description</AccordionTrigger>
                   <AccordionContent>
-                    {data.nft?.description || 'No description available.'}
+                    <span className="">{data.nft?.description || 'No description available.'}</span>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
@@ -199,16 +198,15 @@ export default function Item({ address, id, favourited, slug }: Item) {
                         {address}
                         </a>
                       </span>
-                      <br />
+                      <br/>
 
-                      <span><b>ID:</b> {id}</span>
+                      <span><b>ID:</b> {id}</span> <br/>
 
-                      <span className="truncate max-w-92 inline-block pt-1"><b>Owner:</b>&nbsp;
+                      <span className="truncate max-w-full inline-block pt-1"><b>Owner:</b>&nbsp;
                         <a className="text-blue-500" href={`/MyNft/${data.nft?.owners?.[0]?.address}`}>{data.nft?.owners?.[0]?.address || 'No owner'}
                         </a>
                       </span> 
-                      <br />
-
+                      <br/>
 
                   </AccordionContent>
                 </AccordionItem>

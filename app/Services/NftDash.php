@@ -17,7 +17,7 @@ class NftDash
                     'chain' => 'ethereum',
                     'order_by' => 'market_cap',
                     'order_direction' => 'desc',
-                    'limit' => '20',
+                    'limit' => '10',
                 ]);
 
                 if (!$response->successful()) {
