@@ -26,7 +26,6 @@ export default function Dashboard() {
   }
 
   const { props } = usePage<{ topNfts?: TopNfts }>();
-
   const [ address, setAddress ] = React.useState('');
 
   const topNfts = props.topNfts?.collections;

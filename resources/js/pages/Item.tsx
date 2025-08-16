@@ -156,8 +156,8 @@ export default function Item({ address, id, favourited, slug }: Item) {
               <img src={data.nft?.image_url} 
                   className="rounded-lg" />
             </div>
-            <div className="pl-5 md:py-3">
-              <h1 className="font-bold text-3xl">{fixName(data.nft?.name, slug, id, true)}</h1>
+            <div className="pl-5 md:py-3 w-92">
+              <h1 className="font-bold text-3xl truncate">{fixName(data.nft?.name, slug, id, true)}</h1>
               <div className="flex">
               <SilverButton text={
                 <span className="flex items-center justify-center gap-1">
